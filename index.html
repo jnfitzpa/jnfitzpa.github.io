@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.v5.min.js"></script>
 <style> .chart rect { fill: steelblue } </style>
-<html><body>
+<html><body onload='init()'>
 	<p>Here are the magic numbers from Lost: <span id="data"></span></p>
 
-	<svg class="chart" width="120" height="500"></svg>
+	<svg class="chart" width="120" height="1000"></svg>
 <script>
-var data = [4,8,15,16,23,42];
-document.getElementById("data").innerHTML = data;
-d3.select(".chart").selectAll("rect").data(data)
-.enter().append("rect")
-.attr("width",19)
-.attr("height",function(d) { return 10*d; })
-.attr("x",function(d,i) { return 20*i; })
-.attr("y",function(d) { return 420 - 10*d; });
+async function init() {
+  console.log('this means something');
+	const data = await d3.csv('https://jnfitzpa.github.io/AvgRateByAge.csv');
+  console.log(data);
+	document.getElementById("data").innerHTML = data.avg;
+	d3.select(".chart").selectAll("rect").data(data)
+	.enter().append("rect")
+	.attr("width",19)
+	.attr("height",function(d) { return d.avg; })
+	.attr("x",function(d,i) { return 20*i; })
+	.attr("y",function(d) { return 920 - d.avg; });
+}
 </script>
 
 </body>
