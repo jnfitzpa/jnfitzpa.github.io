@@ -15,6 +15,10 @@ p{
   margin-left: 50px;
 }
 
+#scene > div{
+  height: 100%;
+}
+
 #buttons {
   display: flex;
   align-items: center; /* Use another value to see the result */

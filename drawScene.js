@@ -1,3 +1,7 @@
+var messages_text =  ["I'm down for this first chart"
+,"Bro this second chart is sick"
+,"Dude! This third chart is far out!"];
+
 function init() {
   draw_scene(1);
 }
@@ -7,7 +11,9 @@ async function draw_scene(scene_num){
     document.getElementById("magic").innerHTML = "";
     d3.select("#prev").attr("onclick","");
     d3.select("#next").attr("onclick","draw_scene(2)");
-    document.getElementById('prev').style.backgroundColor = 'silver';
+    var prevEl = document.getElementById('prev');
+    prevEl.style.backgroundColor = 'silver';
+    prevEl.style.opacity = '.3';
     document.getElementById('next').removeAttribute("style");
 
     const data = await d3.csv('https://jnfitzpa.github.io/AvgRateByAge.csv');
@@ -95,6 +101,7 @@ async function draw_scene(scene_num){
     .style("text-anchor", "middle")
     .text("Subscriber's Age");
 
+    d3.select("#message > p").text(messages_text[scene_num-1]);
 
 
   } else if (scene_num == 2){
@@ -191,6 +198,7 @@ async function draw_scene(scene_num){
     .style("text-anchor", "middle")
     .text("Family Type");
 
+    d3.select("#message > p").text(messages_text[scene_num-1]);
   }
 
 }
