@@ -3,14 +3,33 @@
 
 <html>
 <head>
-  <link rel="stylesheet" href="https://jnfitzpa.github.io/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="https://jnfitzpa.github.io/drawScene.js"></script>
+<script src="drawScene.js"></script>
 
 <body onload='init()'>
 
-	<svg class="chart"></svg>
+<div id="outercontainer">
+	<h1>Analysis of Health Insurance Premiums</h1>
+	<div id="scene">
+		<div id="viz">
+			<svg id="magic" class="chart"></svg>
+		</div>
+		<div id="message">
+			<p>I got somethin to say about this rad viz</p>
+		</div>
+	</div>
+	<div id="buttons">
+		<nav id="prev">
+			<p>Previous</p>
+		</nav>
+		<nav id="next">
+			<p>Next</p>
+		</nav>
+	</div>
+</div>
+
 
 </body>
 </html>
