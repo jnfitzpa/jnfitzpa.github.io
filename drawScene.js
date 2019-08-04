@@ -1,7 +1,7 @@
 //Set the text for the messages
-var messages_text =  ["I'm down for this first chart"
-,"Bro this second chart is sick"
-,"Dude! This third chart is far out!"];
+var messages_text =  ["Healthcare premiums vary from state to state. This graph shows the average monthly cost of healthcare in each state for the year 2016. No data was available for states that appear grey. "
+,"Aging is inevitable. So are healcare premium hikes. These are the average premiums we have to look forward to as we get older."
+,""];
 
 
 
@@ -15,6 +15,8 @@ async function draw_scene(scene_num){
     document.getElementById("magic").innerHTML = "";
     d3.select("#prev").attr("onclick","");
     d3.select("#next").attr("onclick","draw_scene(2)");
+      //d3.select("#viz").attr("width","800");
+      //d3.select("#viz").attr("height","500");
     var prevEl = document.getElementById('prev');
     prevEl.style.backgroundColor = 'silver';
     prevEl.style.opacity = '.3';
@@ -23,11 +25,16 @@ async function draw_scene(scene_num){
     //var child = document.getElementsByClassName("tooltip");
     //parent.removeChild(child);
     var frameWidth = 800;
-    var frameHeight = 500;
+    var frameHeight = 600;
 
     var svg = d3.select("svg")
+        //.attr("viewBox","0 0 " + frameWidth + " " +frameHeight)
         .attr("width",frameWidth)
-        .attr("height",frameHeight),
+        //.attr("height","auto")
+        .attr("viewBox","0 0 1000 600")
+        .attr("preserveAspectRatio","xMidYMid meet")
+        //.attr("height",frameHeight)
+        ,
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
@@ -43,7 +50,7 @@ async function draw_scene(scene_num){
     var color = d3.scaleQuantize()
         .domain([150, 700])
         .range(d3.schemeBuGn[9]);
-
+/*
     var g = svg.append("g")
         .attr("class", "key")
         .attr("transform", "translate(0,40)");
@@ -76,7 +83,7 @@ async function draw_scene(scene_num){
         .tickValues(color.domain()))
       .select(".domain")
         .remove();
-
+*/
     var promises = [
       d3.json("https://d3js.org/us-10m.v1.json"),
       d3.tsv("https://s3-us-west-2.amazonaws.com/vida-public/geo/us-state-names.tsv", function(d) {
@@ -130,7 +137,7 @@ async function draw_scene(scene_num){
     d3.select("#message > p").text(messages_text[scene_num-1]);
 
 
-  } else if (scene_num == 2){
+  } else if (scene_num == 2) {
     document.getElementById("magic").innerHTML = "";
     d3.select("#prev").attr("onclick","draw_scene(1)");
     d3.select("#next").attr("onclick","draw_scene(3)");
@@ -166,6 +173,7 @@ async function draw_scene(scene_num){
     d3.select(".chart")
     .attr("width",frameWidth)
     .attr("height",frameHeight)
+    .attr("viewBox","0 0 800 500")
     .append("g").attr("transform","translate("+lmargin+","+tmargin+")")
     .selectAll("rect").data(data)
     .enter().append("rect")
@@ -264,6 +272,7 @@ async function draw_scene(scene_num){
   	d3.select(".chart")
   	.attr("width",frameWidth)
   	.attr("height",frameHeight)
+    .attr("viewBox","0 0 800 500")
   	.append("g").attr("transform","translate("+lmargin+","+tmargin+")")
   	.selectAll("rect").data(data)
   	.enter().append("rect")
