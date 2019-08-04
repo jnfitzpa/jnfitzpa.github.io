@@ -1,7 +1,7 @@
 //Set the text for the messages
 var messages_text =  ["Healthcare premiums vary from state to state. This graph shows the average monthly cost of healthcare in each state for the year 2016. No data was available for states that appear grey. "
 ,"Aging is inevitable. So are healcare premium hikes. These are the average premiums we have to look forward to as we get older."
-,""];
+,"The size and type of your family also has an impact on how much you pay. This chart details the average premiums for those different family types in 2016."];
 
 
 
@@ -37,6 +37,10 @@ async function draw_scene(scene_num){
         ,
         width = +svg.attr("width"),
         height = +svg.attr("height");
+
+    var tt = d3.select("#tooltipdiv")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
 
     var premium = d3.map();
     var stateNames = d3.map();
@@ -123,10 +127,25 @@ async function draw_scene(scene_num){
               }
           })
           .attr("d", path)
-        .append("title")
-          .text(function(d) {
-        			console.log("title", d)
-        			return d.rate; });
+          .on("mouseover", function(d) {
+            var prem = parseFloat(d.rate);
+            var sn = stateNames.get(parseInt(d.id));
+            tt.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tt	.html("State: " + sn + "<br/>"  + "Premium: $" + prem.toFixed(2))
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+            })
+          .on("mouseout", function(d) {
+            tt.transition()
+                .duration(500)
+                .style("opacity", 0)
+            });
+        //.append("title")
+          //.text(function(d) {
+        	//		console.log("title", d)
+        	//		return d.rate; });
 
       svg.append("path")
           .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
